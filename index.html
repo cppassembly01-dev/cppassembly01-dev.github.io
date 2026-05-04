@@ -3,239 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spaceflight Simulator - Guia Mobile</title>
-    <style>
-        /* Estilos Globais e Tema Espacial */
-        :root {
-            --bg-color: #0b0c10;
-            --text-main: #c5c6c7;
-            --accent-blue: #66fcf1;
-            --accent-dark: #45a29e;
-            --card-bg: #1f2833;
-            --highlight: #e0f2f1;
-            --nav-bg: rgba(11, 12, 16, 0.95);
-            --danger: #ff5252;
-            --warning: #ffca28;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 130px; 
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 50%, #1f2833 0%, #0b0c10 100%);
-            background-attachment: fixed;
-        }
-
-        /* Barra de rolagem */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); }
-        ::-webkit-scrollbar-thumb { background: var(--card-bg); border-radius: 10px; }
-
-        /* Foguete do Scroll */
-        #scroll-rocket {
-            position: fixed;
-            right: 15px;
-            top: 0;
-            font-size: 2.5rem;
-            transform: translateY(-50%) rotate(180deg);
-            z-index: 9999;
-            transition: top 0.1s ease-out;
-            pointer-events: none;
-            filter: drop-shadow(0 0 10px var(--accent-blue));
-        }
-
-        /* Player de Música Flutuante */
-        #music-player {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background-color: var(--nav-bg);
-            border: 1px solid var(--accent-dark);
-            border-radius: 10px;
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            z-index: 1000;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
-            backdrop-filter: blur(8px);
-            transition: transform 0.3s ease;
-        }
-
-        #music-player:hover { transform: translateY(-5px); border-color: var(--accent-blue); }
-
-        #music-player button {
-            background: transparent;
-            border: none;
-            color: var(--accent-blue);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.2s, text-shadow 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #music-player button:hover { transform: scale(1.1); text-shadow: 0 0 8px var(--accent-blue); }
-
-        .track-info {
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .track-info span { color: var(--accent-blue); font-size: 0.8rem; }
-
-        /* Menu de Navegação */
-        nav {
-            position: sticky;
-            top: 0;
-            background-color: var(--nav-bg);
-            padding: 15px 10px;
-            text-align: center;
-            border-bottom: 2px solid var(--accent-dark);
-            z-index: 999;
-            backdrop-filter: blur(8px);
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: bold;
-            position: relative;
-            padding: 5px 10px;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 50%;
-            background-color: var(--accent-blue);
-            transition: all 0.3s ease;
-            box-shadow: 0 0 8px var(--accent-blue);
-        }
-
-        nav a:hover, nav a.active { color: #ffffff; text-shadow: 0 0 8px var(--accent-blue); }
-        nav a:hover::after, nav a.active::after { width: 100%; left: 0; }
-
-        /* Sistema de Páginas (SPA) */
-        .page { display: none; animation: fadeIn 0.5s ease-out forwards; }
-        .page.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Cabeçalho */
-        header { text-align: center; padding: 60px 20px 40px 20px; }
-        h1 { color: var(--accent-blue); font-size: 3rem; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
-        p.subtitle { font-size: 1.2rem; color: var(--accent-dark); max-width: 700px; margin: 15px auto; }
-
-        /* Container Principal */
-        main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 70vh; }
-
-        /* Tópicos e Caixas */
-        .topic {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border-left: 5px solid var(--accent-dark);
-        }
-
-        h2 { color: var(--accent-blue); font-size: 2rem; margin-top: 0; border-bottom: 1px solid rgba(69, 162, 158, 0.3); padding-bottom: 10px; }
-        h3 { color: var(--highlight); margin-top: 30px; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
-        h3::before { content: '➔'; color: var(--accent-blue); font-size: 1rem; }
-        
-        p, li { line-height: 1.7; margin-top: 10px; font-size: 1.05rem; }
-        ul, ol { padding-left: 20px; }
-        strong { color: #fff; }
-
-        .step-box { background-color: rgba(69, 162, 158, 0.1); border-left: 3px solid var(--accent-blue); padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0; }
-        .alert-box { background-color: rgba(255, 82, 82, 0.1); border-left: 3px solid var(--danger); padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0; }
-        .info-box { background-color: rgba(255, 202, 40, 0.1); border-left: 3px solid var(--warning); padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0; }
-        
-        .math-box { text-align: center; font-size: 1.2rem; background: #000; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px dashed var(--accent-dark); overflow-x: auto;}
-
-        /* Tabela Responsiva */
-        .table-responsive { width: 100%; overflow-x: auto; border-radius: 8px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; background-color: #0b0c10; min-width: 600px; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--card-bg); }
-        th { background-color: var(--accent-dark); color: #fff; }
-        tr:hover { background-color: rgba(69, 162, 158, 0.1); }
-
-        /* Placeholders para Mídia */
-        .media-placeholder {
-            width: 100%; background-color: #050608; border: 2px dashed var(--accent-dark); border-radius: 10px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--accent-dark); font-weight: bold; margin: 25px 0; text-align: center;
-            overflow: hidden; transition: transform 0.3s ease, border-color 0.3s ease; padding: 20px; box-sizing: border-box;
-        }
-        .media-placeholder:hover { transform: scale(1.02); border-color: var(--accent-blue); }
-        .media-placeholder.image { height: 350px; }
-        .media-placeholder.video { height: 450px; }
-        .media-placeholder.gif { height: 250px; }
-
-        footer { text-align: center; padding: 40px 20px; background-color: var(--card-bg); border-top: 2px solid var(--accent-dark); }
-
-        /* =========================================
-           MEDIA QUERIES (AJUSTES PARA CELULARES)
-           ========================================= */
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.5rem; }
-            h3 { font-size: 1.2rem; }
-            p.subtitle { font-size: 1rem; }
-            p, li { font-size: 0.95rem; }
-
-            header { padding: 40px 15px 20px 15px; }
-            main { padding: 10px; }
-            .topic { padding: 20px; margin-bottom: 25px; }
-
-            nav { padding: 10px 5px; gap: 8px; justify-content: center; }
-            nav a { font-size: 0.85rem; padding: 5px; }
-
-            #scroll-rocket { right: 5px; font-size: 1.8rem; opacity: 0.4; }
-
-            #music-player {
-                bottom: 15px; left: 10px; right: 10px;
-                justify-content: space-between;
-                padding: 10px;
-            }
-
-            .media-placeholder.image { height: 250px; }
-            .media-placeholder.video { height: 250px; }
-            .media-placeholder.gif { height: 200px; }
-            
-            .math-box { font-size: 1rem; padding: 10px; }
-        }
-    </style>
+    <title>Spaceflight Simulator - Guia Supremo</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script id="script" async src="script.js"></script>
 </head>
 <body>
+    <canvas id="starfield"></canvas>
 
     <div id="music-player">
         <button id="play-pause-btn" title="Reproduzir/Pausar">▶</button>
@@ -243,6 +22,7 @@
             Rádio Missão
             <span id="track-status">Pausado</span>
         </div>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" title="Volume">
         <button id="next-btn" title="Próxima Faixa">⏭</button>
         <audio id="bg-audio" src="assets/audio/Prism - Spaceflight Simulator - Build (Official Soundtrack).opus"></audio>
     </div>
@@ -258,49 +38,40 @@
     <div id="scroll-rocket">🚀</div>
 
     <header>
-        <h1>Manual Mobile do SFS</h1>
-        <p class="subtitle">A Academia de Voo Espacial definitiva para dominar o Spaceflight Simulator direto do seu Android.</p>
+        <h1>Manual do Comandante</h1>
+        <p class="subtitle">A Academia de Voo Espacial definitiva para dominar o Spaceflight Simulator.</p>
     </header>
 
     <main>
         <div id="page-inicio" class="page active">
             <section class="topic">
-                <h2>O Cosmos na Palma da Mão</h2>
-                <p>No <strong>Spaceflight Simulator (SFS)</strong>, a tela do seu celular se transforma no centro de comando de uma agência espacial. A gravidade é real, as órbitas seguem as leis da física e tudo é controlado por gestos na tela.</p>
+                <h2>Bem-vindo à Agência Espacial</h2>
+                <p>O <strong>Spaceflight Simulator (SFS)</strong> não é apenas um jogo; é um laboratório de física orbital disfarçado de diversão. Aqui, a gravidade é real, as órbitas seguem as leis de Kepler e cada gota de combustível importa.</p>
                 
-                <h3>A Interface Touch do Jogo</h3>
-                <p>Antes de decolar, acostume-se com os controles de toque do seu Android:</p>
+                <h3>A Interface do Jogo</h3>
+                <p>Antes de voar, você precisa entender suas ferramentas:</p>
                 <ul>
-                    <li><strong>VAB (Vehicle Assembly Building):</strong> É a prancheta de desenho. Toque e arraste as peças do menu lateral esquerdo para o centro. Você pode rolar a tela com um dedo e usar o <em>gesto de pinça</em> para dar zoom in/out.</li>
-                    <li><strong>Tela de Voo:</strong> Onde a mágica acontece. 
-                        <ul>
-                            <li><strong>Acelerador (Throttle):</strong> Uma barra deslizante na lateral esquerda. Deslize para cima para acelerar os motores.</li>
-                            <li><strong>Setas Direcionais:</strong> Botões no canto inferior para girar o "nariz" do foguete (Pitch/Yaw).</li>
-                            <li><strong>Botão de Estágios:</strong> O ícone de "Play" (triângulo grande) no canto direito. Toque nele para soltar partes ou ligar o próximo motor automaticamente.</li>
-                        </ul>
-                    </li>
-                    <li><strong>O Mapa (Map):</strong> Toque no botão "Map" no canto superior. Use a pinça para afastar a câmera e ver o sistema solar. Toque nos planetas para abrir as opções de navegação.</li>
+                    <li><strong>VAB (Vehicle Assembly Building):</strong> A tela quadriculada onde você monta seus foguetes arrastando peças.</li>
+                    <li><strong>Tela de Voo:</strong> Onde você pilota. Possui o acelerador à esquerda, as setas de controle direcional e o indicador de velocidade no topo.</li>
+                    <li><strong>O Mapa (Map):</strong> Sua tela mais importante. O espaço é vasto demais para ser visto a olho nu. Você passará 80% das missões olhando para as linhas de trajetória no mapa.</li>
                 </ul>
 
                 <div class="media-placeholder video">
-                    <span>[Espaço para Vídeo: Gravando a tela do celular (Screen Record) mostrando a interface principal e os toques]</span>
+                    <img src="https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=800&q=80" alt="Foguete decolando">
+                    <span>[Vídeo: Transição VAB para Decolagem]</span>
                 </div>
             </section>
         </div>
 
         <div id="page-catalogo" class="page">
             <section class="topic">
-                <h2>O Catálogo de Peças (Mobile)</h2>
-                <p>Conhecer o hardware é vital. Para acessar as categorias (Básico, Aerodinâmica, Utilidades), basta tocar nos nomes no canto esquerdo da tela do VAB e arrastar para baixo para ver mais opções.</p>
-
-                <div class="info-box">
-                    <strong>Aviso sobre DLCs:</strong> No Android, algumas peças gigantes e os planetas do sistema solar exterior (como Júpiter) fazem parte das Expansões Pagas do jogo. O guia focará nas peças do jogo base, mas a física se aplica a todas!
-                </div>
+                <h2>O Catálogo de Peças</h2>
+                <p>Conhecer o hardware é o primeiro passo para não explodir na plataforma de lançamento.</p>
 
                 <h3>1. Comando (O Cérebro)</h3>
                 <ul>
-                    <li><strong>Cápsula (Capsule):</strong> Tripulada. Possui "Torque" forte (permite girar a nave rapidamente usando as setas na tela).</li>
-                    <li><strong>Sonda (Probe):</strong> Não tripulada. Leve, ideal para satélites. O torque é muito fraco.</li>
+                    <li><strong>Cápsula (Capsule):</strong> Tripulada. Pesada, mas possui "Torque" interno forte (capacidade de girar a nave). Ideal para missões de ida e volta.</li>
+                    <li><strong>Sonda (Probe):</strong> Não tripulada. Leve, perfeita para satélites. Tem torque fraco.</li>
                 </ul>
 
                 <h3>2. Propulsão (Motores)</h3>
@@ -314,30 +85,30 @@
                         <tr>
                             <td><strong>Hawk / Titan</strong></td>
                             <td>Atmosfera (1º Estágio)</td>
-                            <td>Empuxo massivo para levantar peso. Gasta muito combustível.</td>
+                            <td>Empuxo massivo para vencer a gravidade. Gasta muito combustível.</td>
                         </tr>
                         <tr>
                             <td><strong>Valiant / Frontier</strong></td>
                             <td>Vácuo do Espaço</td>
-                            <td>Baixo empuxo. Perfeito para manobras orbitais pois poupa muito combustível.</td>
+                            <td>Baixo empuxo, mas alta eficiência. Faz o combustível render.</td>
                         </tr>
                         <tr>
-                            <td><strong>RCS Thruster</strong></td>
-                            <td>Manobras Finas</td>
-                            <td>Jatos pequenos controlados por toques direcionais na tela.</td>
+                            <td><strong>Ion Engine</strong></td>
+                            <td>Interplanetário Longo</td>
+                            <td>Empuxo quase zero. Gasta poquíssimo combustível. Exige painéis solares.</td>
                         </tr>
                     </table>
                 </div>
 
                 <div class="media-placeholder image">
-                    <span>[Espaço para Imagem: Screenshot da aba de motores no celular]</span>
+                    <span>[Espaço para Imagem: Comparativo visual do tamanho e cor dos motores]</span>
                 </div>
 
-                <h3>3. Utilidades</h3>
+                <h3>3. Aerodinâmica e Estrutura</h3>
                 <ul>
-                    <li><strong>Separador (Separator):</strong> Toque no VAB para adicionar. Durante o voo, ele ejetará os tanques vazios quando você tocar no botão de estágio.</li>
-                    <li><strong>Escudo de Calor (Heat Shield):</strong> Proteção essencial contra a atmosfera. Coloque embaixo da cápsula.</li>
-                    <li><strong>Paraquedas (Parachute):</strong> Toque nele na tela de voo durante a queda para ativá-lo parcialmente, ou aguarde que ele abra sozinho aos 500m de altitude.</li>
+                    <li><strong>Coifas (Fairings):</strong> Capas que cobrem a carga útil para cortar o vento. Descarte-as acima de 30km para perder peso.</li>
+                    <li><strong>Cones Aerodinâmicos:</strong> Reduzem o arrasto em tanques laterais.</li>
+                    <li><strong>Struts (Suportes):</strong> Hastes metálicas finas usadas para prender partes pesadas do foguete para que ele não dobre e quebre no ar.</li>
                 </ul>
             </section>
         </div>
@@ -348,32 +119,29 @@
                 
                 <h3>Missão 1: O Primeiro Salto</h3>
                 <ol>
-                    <li>No VAB, arraste uma <strong>Cápsula</strong> para o centro. Deslize a lista lateral, pegue um <strong>Paraquedas</strong> e coloque no topo.</li>
-                    <li>Adicione um <strong>Escudo de Calor</strong> na base e, abaixo dele, um <strong>Separador</strong>.</li>
-                    <li>Arraste 2 <strong>Tanques</strong> longos e um motor <strong>Hawk</strong> para baixo do separador.</li>
-                    <li>Toque em "Launch". Na tela de voo, arraste a barra da esquerda (acelerador) para cima (100%).</li>
-                    <li>Toque na própria nave para ligar o motor (ou use o botão de estágios). Suba reto!</li>
-                    <li>Quando o motor apagar, toque no separador (ou no botão de estágios) para soltar a parte de baixo. O paraquedas abrirá automaticamente quando você cair abaixo de 2.500m.</li>
+                    <li>No VAB, coloque uma <strong>Cápsula</strong>, um <strong>Paraquedas</strong> no topo, e um <strong>Escudo de Calor</strong> na base.</li>
+                    <li>Abaixo do escudo, adicione um <strong>Separador</strong>, 2 <strong>Tanques</strong> e um motor <strong>Hawk</strong>.</li>
+                    <li>Ligue o motor, suba reto e, quando o combustível acabar, ative o separador.</li>
+                    <li>Abra o paraquedas quando estiver caindo abaixo de 2.500m.</li>
                 </ol>
 
                 <h3>Missão 2: Entrando em Órbita da Terra (LEO)</h3>
-                <p>Faça a curva gravitacional: Suba reto. Aos 2.500m, toque seguidamente na <strong>setinha para a direita</strong> na tela para inclinar o foguete. Aos 10km, você deve estar inclinado a 45 graus. Abra o mapa. Quando o ponto mais alto (Apoápside) passar de 30km, deslize o acelerador para 0%. Espere chegar perto do Apoápside no mapa, vire a nave para frente e acelere a 100% novamente até a linha formar um círculo perfeito.</p>
+                <p>Faça o "Gravity Turn": Suba reto até 2.500m. Incline levemente para a direita. Aos 10km, você deve estar a 45 graus. Abra o mapa. Quando o ponto mais alto (Apoápside) passar de 30km, desligue o motor. Espere chegar no Apoápside e acelere para a direita novamente até circular a órbita.</p>
 
                 <div class="media-placeholder video">
-                    <span>[Espaço para Vídeo: Gravando a tela mostrando os toques no direcional e a transição pro Mapa]</span>
+                    <span>[Espaço para Vídeo: Passo a passo visual de circularização da órbita]</span>
                 </div>
 
                 <h3>Missão 3: Pouso na Lua</h3>
                 <ol>
-                    <li>Em órbita, abra o mapa, toque na Lua e selecione <strong>"Navigate To"</strong>.</li>
-                    <li>Toque nos botões de <strong>Acelerar o Tempo (Time Warp)</strong> no canto superior direito até chegar no ponto pontilhado "Transfer Window".</li>
-                    <li>Alinhe a nave e acelere até o Delta-V zerar.</li>
-                    <li>Ao chegar na Lua, vire a nave ao contrário (setas direcionais) e acelere para frear e entrar em órbita.</li>
-                    <li>Desça verticalmente. Toque nos <strong>Trens de Pouso (Landing Legs)</strong> na tela para abri-los. Deslize a barra de aceleração aos poucos para pousar suavemente.</li>
+                    <li>Em órbita da Terra, selecione a Lua e clique em "Navigate To".</li>
+                    <li>Acelere no ponto da "Transfer Window" até o Delta-V zerar.</li>
+                    <li>Ao chegar na Lua, freie contra a direção do movimento (Retrograde) para orbitar.</li>
+                    <li>Desça verticalmente, abra o trem de pouso (Landing Legs) e use o motor para tocar o chão a menos de 5 m/s (Suicide Burn).</li>
                 </ol>
                 
                 <div class="media-placeholder gif">
-                    <span>[Espaço para GIF: O pouso na superfície lunar focado na barra de aceleração subindo e descendo]</span>
+                    <span>[Espaço para GIF: Animação de um "Suicide Burn" perfeito na superfície lunar]</span>
                 </div>
             </section>
         </div>
@@ -382,159 +150,68 @@
             <section class="topic">
                 <h2>Missões Avançadas (4 a 6)</h2>
 
-                <h3>Missão 4: Acoplagem (Docking) Mobile</h3>
-                <p>O Docking exige paciência e toques sutis. Equipe ambas as naves com "Docking Ports" e blocos "RCS".</p>
+                <h3>Missão 4: Acoplagem (Docking)</h3>
+                <p>Você precisará de "Docking Ports" nas naves e jatos "RCS".</p>
                 <ol>
-                    <li>Use "Navigate To" no mapa para criar um encontro em órbita da Terra.</li>
-                    <li>Quando chegar muito perto, zere a Velocidade Relativa (Relative Speed) freando contra o alvo.</li>
-                    <li><strong>O Segredo do Android:</strong> Toque no botão <strong>RCS</strong> na interface. Agora, ao invés de usar os botões de girar, você verá setas de translação, ou você pode arrastar o dedo suavemente no meio da tela para mover a nave de lado sem girá-la.</li>
-                    <li>Aproxime-se a menos de 1 m/s e deixe o magnetismo conectar.</li>
+                    <li>Coloque o Alvo em uma órbita alta (ex: 50km). Coloque sua nave em uma órbita menor (35km).</li>
+                    <li>Use "Navigate To" no mapa para criar um encontro.</li>
+                    <li>Ao se aproximarem visualmente, zere a Velocidade Relativa (Relative Speed 0.0 m/s) freando contra o movimento do alvo.</li>
+                    <li>Use os jatos RCS para se aproximar lateralmente a 1 m/s e deixe os ímãs conectarem as portas.</li>
                 </ol>
 
                 <div class="media-placeholder video">
-                    <span>[Espaço para Vídeo: Mostrando como arrastar o dedo na tela usando os RCS para acoplar]</span>
+                    <span>[Espaço para Vídeo: Tutorial prático de Docking e uso correto do painel RCS]</span>
                 </div>
 
                 <h3>Missão 5: Montando uma Estação Espacial</h3>
-                <p>Mande o primeiro módulo (o "Núcleo"). Toque nos Painéis Solares na tela de voo para que eles se abram e gerem energia. Vá mandando outros pedaços e use a técnica de Docking da Missão 4 para colar tudo junto no espaço.</p>
+                <p>Repita a Missão 4 várias vezes. Lance primeiro um módulo "Núcleo" com baterias (Sondas) e painéis solares grandes. Depois, vá acoplando módulos de habitação e tanques gigantes de combustível para servir de "posto de gasolina" orbital.</p>
 
                 <h3>Missão 6: Enviando Rovers</h3>
-                <p>Na tela do VAB, use a categoria "Aerodinâmica" para encapsular seu veículo com rodinhas em uma Coifa (Fairing). Quando pousar, toque no separador da base, ative o veículo e use as setas direcionais laterais da interface de voo para acelerar o Rover pelo chão!</p>
+                <p>Para explorar o solo, você precisa de um veículo com Rodas (Rover Wheels). Monte o Rover pequeno no VAB usando Struts, Rodas e uma Sonda. Encapsule-o em uma <strong>Coifa (Fairing)</strong> gigante no topo do seu foguete. Pouse normalmente e, no solo, separe o Rover da base de pouso.</p>
 
                 <div class="media-placeholder image">
-                    <span>[Espaço para Imagem: Rover andando no solo de Marte ou da Lua]</span>
+                    <span>[Espaço para Imagem: Design de um Rover compacto encapsulado em uma coifa]</span>
                 </div>
             </section>
         </div>
 
         <div id="page-fisica" class="page">
             <section class="topic">
-                <h2>Física & Manobras Inteligentes</h2>
-
-                <div class="step-box">
-                    <strong>Dica de Desempenho (Android):</strong> O jogo processa a física em tempo real. Construir foguetes colossais com 500 peças pode fazer seu celular esquentar ou o jogo travar (lag). Tente manter seus designs limpos e eficientes!
-                </div>
+                <h2>Ciência de Foguetes & Interplanetário</h2>
 
                 <h3>A Equação do Foguete (Delta-V)</h3>
-                <p>O Delta-V ($ \Delta v $) mostrado ao lado do motor no VAB é o seu limite de viagem. Ele obedece à equação de Tsiolkovsky:</p>
+                <p>No espaço, não medimos distância em quilômetros, mas em $ \Delta v $ (mudança de velocidade). O Delta-V do seu foguete obedece à equação de Tsiolkovsky:</p>
                 
                 <div class="math-box">
                     $$ \Delta v = I_{sp} \cdot g_0 \cdot \ln\left(\frac{m_0}{m_f}\right) $$
                 </div>
                 
-                <p>Na prática: Quanto mais peso morto você descarta durante o voo através dos botões de Estágio, mais o seu motor rende e mais longe você chega.</p>
+                <p>Onde $I_{sp}$ é a eficiência do motor (Impulso Específico), $g_0$ é a gravidade, e $ \ln(m_0/m_f) $ é a relação entre a nave cheia e seca. <strong>Resumo prático:</strong> Ejetar peso morto (tanques vazios) aumenta seu Delta-V drasticamente!</p>
 
-                <h3>Slingshot (Assistência Gravitacional)</h3>
-                <p>Em vez de gastar todo o combustível do tanque, trace uma rota no mapa que passe muito perto da Lua ou de Vênus (se tiver a expansão). Passar "por trás" de um planeta na sua órbita usa a gravidade dele para catapultar sua nave para frente. É velocidade de graça!</p>
-
-                <div class="media-placeholder gif">
-                    <span>[Espaço para GIF: Visualização no Mapa do Android de uma rota sendo "dobrada" pela gravidade da Lua]</span>
+                <div class="info-box">
+                    <strong>Efeito Oberth:</strong> Nunca faça manobras de transferência no meio do nada! Ligar os motores quando você está na Periápside (ponto mais baixo e veloz) deforma sua órbita muito mais rápido, economizando toneladas de combustível.
                 </div>
 
-                <h3>Aerocaptura Térmica</h3>
-                <p>Sua cápsula vai virar bola de fogo ao voltar para a Terra. Ajuste sua órbita no mapa para que a linha mais baixa passe a uns 20km de altura no planeta. Aponte o escudo de calor na direção da queda, segure firme no celular e deixe o atrito com o ar frear a nave sozinho. Só toque no paraquedas quando a temperatura baixar e ele não correr risco de queimar.</p>
+                <h3>Slingshot (Assistência Gravitacional)</h3>
+                <p>A manobra dos mestres. Em vez de gastar combustível para ir para Marte ou Júpiter, voe perto da Lua ou de Vênus. Se você passar por trás de um planeta (no sentido da órbita dele), a gravidade te "arremessa" para frente, aumentando seu Delta-V gratuitamente.</p>
+
+                <div class="media-placeholder gif">
+                    <span>[Espaço para GIF: Gráfico animado mostrando o planeta transferindo energia para a nave no Slingshot]</span>
+                </div>
+
+                <h3>Aerobraking e Reentrada</h3>
+                <p>Planetas com atmosfera (Terra, Vênus, Marte) oferecem frenagem grátis. Mergulhe o Periápside da sua nave superficialmente na atmosfera (entre 15km e 20km na Terra). O ar freará a nave, e os <strong>Heat Shields</strong> a protegerão do plasma, economizando o combustível que você gastaria para entrar em órbita.</p>
             </section>
         </div>
     </main>
 
     <footer>
-        <p>A engenharia aeroespacial no seu bolso. Explore o cosmos, Comandante!</p>
+        <p>A engenharia aeroespacial é feita de tentativas, explosões e muito orgulho. Explore o cosmos, Comandante!</p>
     </footer>
 
-    <script>
-        // --- Lógica de Navegação (SPA - Single Page Application) ---
-        function handleHashChange() {
-            let hash = window.location.hash.substring(1) || 'inicio';
-            
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            
-            let targetPage = document.getElementById('page-' + hash);
-            if(targetPage) {
-                targetPage.classList.add('active');
-            } else {
-                document.getElementById('page-inicio').classList.add('active');
-                hash = 'inicio';
-            }
-            
-            document.querySelectorAll('nav a').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + hash) {
-                    link.classList.add('active');
-                }
-            });
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        window.addEventListener('hashchange', handleHashChange);
-        window.addEventListener('DOMContentLoaded', handleHashChange);
-
-        // --- Lógica do Player de Música ---
-        const audioFiles = [
-            "assets/audio/Prism - Spaceflight Simulator - Build (Official Soundtrack).opus",
-            "assets/audio/Prism - Spaceflight Simulator - Cosmic Ocean (Official Soundtrack).m4a",
-            "assets/audio/Prism - Spaceflight Simulator - Deep Space (Official Soundtrack).opus",
-            "assets/audio/Prism - Spaceflight Simulator - Far Away (Official Soundtrack).opus",
-            "assets/audio/Prism - Spaceflight Simulator - Frequency (Official Soundtrack).opus",
-            "assets/audio/Prism - Spaceflight Simulator - Space Whales (Official Soundtrack).opus",
-            "assets/audio/Prism - Spaceflight Simulator - Tiny Planet (Official Soundtrack).opus"
-        ];
-        
-        let currentTrack = 0;
-        
-        const audioEl = document.getElementById('bg-audio');
-        const playPauseBtn = document.getElementById('play-pause-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const trackStatus = document.getElementById('track-status');
-
-        function playTrack() {
-            audioEl.play().then(() => {
-                playPauseBtn.innerText = '⏸';
-                trackStatus.innerText = `Tocando Faixa ${currentTrack + 1}`;
-            }).catch(err => {
-                console.log("Erro ao tocar ou Autoplay bloqueado:", err);
-                playPauseBtn.innerText = '▶';
-                trackStatus.innerText = 'Erro / Pausado';
-            });
-        }
-
-        function togglePlay() {
-            if (audioEl.paused) {
-                playTrack();
-            } else {
-                audioEl.pause();
-                playPauseBtn.innerText = '▶';
-                trackStatus.innerText = 'Pausado';
-            }
-        }
-
-        function nextTrack() {
-            currentTrack = (currentTrack + 1) % audioFiles.length;
-            audioEl.src = audioFiles[currentTrack];
-            playTrack();
-        }
-
-        playPauseBtn.addEventListener('click', togglePlay);
-        nextBtn.addEventListener('click', nextTrack);
-        audioEl.addEventListener('ended', nextTrack);
-
-        // --- Lógica do Foguete do Scroll ---
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight;
-            const winHeight = window.innerHeight;
-            
-            const scrollableDistance = docHeight - winHeight;
-            let scrollPercent = 0;
-            if (scrollableDistance > 0) {
-                scrollPercent = scrollTop / scrollableDistance;
-            }
-            
-            const rocket = document.getElementById('scroll-rocket');
-            if(rocket) {
-                rocket.style.top = `${Math.min(scrollPercent * 100, 95)}%`;
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
+</body>
+</html>dy>
+</html>>
