@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
-    <script id="MathJax-script" async src="script.js"></script>
+    <script src="script.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <canvas id="starfield"></canvas>
@@ -74,32 +74,45 @@
 
                 <h3>2. Propulsão (Motores)</h3>
                 <div class="table-responsive">
+                    <!-- Tabela ajustada com a coluna de Imagem -->
                     <table>
                         <tr>
                             <th>Motor</th>
+                            <th>Imagem</th>
                             <th>Uso Ideal</th>
                             <th>Características</th>
                         </tr>
                         <tr>
                             <td><strong>Hawk / Titan</strong></td>
+                            <td>
+                                <div class="media-placeholder image" style="height: 60px; margin: 0; border: none; font-size: 0.8rem;">
+                                   <span><img src="assets/img/motores/hawk.jpg" alt="Motor Hawk"></span>
+                                </div>
+                            </td>
                             <td>Atmosfera (1º Estágio)</td>
                             <td>Empuxo massivo para vencer a gravidade. Gasta muito combustível.</td>
                         </tr>
                         <tr>
                             <td><strong>Valiant / Frontier</strong></td>
+                            <td>
+                                <div class="media-placeholder image" style="height: 60px; margin: 0; border: none; font-size: 0.8rem;">
+                                    <span><img src="assets/img/motores/valiant.jpg" alt="Motor Valiant"></span>
+                                </div>
+                            </td>
                             <td>Vácuo do Espaço</td>
                             <td>Baixo empuxo, mas alta eficiência. Faz o combustível render.</td>
                         </tr>
                         <tr>
                             <td><strong>Ion Engine</strong></td>
+                            <td>
+                                <div class="media-placeholder image" style="height: 60px; margin: 0; border: none; font-size: 0.8rem;">
+                                    <span><img src="assets/img/motores/ion.jpg" alt="Motor Ion"></span>
+                                </div>
+                            </td>
                             <td>Interplanetário Longo</td>
                             <td>Empuxo quase zero. Gasta poquíssimo combustível. Exige painéis solares.</td>
                         </tr>
                     </table>
-                </div>
-
-                <div class="media-placeholder image">
-                    <span>[Espaço para Imagem: Comparativo visual do tamanho e cor dos motores]</span>
                 </div>
 
                 <h3>3. Aerodinâmica e Estrutura</h3>
@@ -126,9 +139,9 @@
                 <h3>Missão 2: Entrando em Órbita da Terra (LEO)</h3>
                 <p>Faça o "Gravity Turn": Suba reto até 2.500m. Incline levemente para a direita. Aos 10km, você deve estar a 45 graus. Abra o mapa. Quando o ponto mais alto (Apoápside) passar de 30km, desligue o motor. Espere chegar no Apoápside e acelere para a direita novamente até circular a órbita.</p>
 
-                <div class="media-placeholder video">
+            <!--<div class="media-placeholder video">
                     <span>[Espaço para Vídeo: Passo a passo visual de circularização da órbita]</span>
-                </div>
+                </div>-->
 
                 <h3>Missão 3: Pouso na Lua</h3>
                 <ol>
@@ -138,9 +151,9 @@
                     <li>Desça verticalmente, abra o trem de pouso (Landing Legs) e use o motor para tocar o chão a menos de 5 m/s (Suicide Burn).</li>
                 </ol>
                 
-                <div class="media-placeholder gif">
+                <!--<div class="media-placeholder gif">
                     <span>[Espaço para GIF: Animação de um "Suicide Burn" perfeito na superfície lunar]</span>
-                </div>
+                </div>-->
             </section>
         </div>
 
@@ -157,9 +170,9 @@
                     <li>Use os jatos RCS para se aproximar lateralmente a 1 m/s e deixe os ímãs conectarem as portas.</li>
                 </ol>
 
-                <div class="media-placeholder video">
+                <!--<div class="media-placeholder video">
                     <span>[Espaço para Vídeo: Tutorial prático de Docking e uso correto do painel RCS]</span>
-                </div>
+                </div>-->
 
                 <h3>Missão 5: Montando uma Estação Espacial</h3>
                 <p>Repita a Missão 4 várias vezes. Lance primeiro um módulo "Núcleo" com baterias (Sondas) e painéis solares grandes. Depois, vá acoplando módulos de habitação e tanques gigantes de combustível para servir de "posto de gasolina" orbital.</p>
@@ -167,9 +180,9 @@
                 <h3>Missão 6: Enviando Rovers</h3>
                 <p>Para explorar o solo, você precisa de um veículo com Rodas (Rover Wheels). Monte o Rover pequeno no VAB usando Struts, Rodas e uma Sonda. Encapsule-o em uma <strong>Coifa (Fairing)</strong> gigante no topo do seu foguete. Pouse normalmente e, no solo, separe o Rover da base de pouso.</p>
 
-                <div class="media-placeholder image">
+                <!--<div class="media-placeholder image">
                     <span>[Espaço para Imagem: Design de um Rover compacto encapsulado em uma coifa]</span>
-                </div>
+                </div>-->
             </section>
         </div>
 
@@ -178,13 +191,15 @@
                 <h2>Ciência de Foguetes & Interplanetário</h2>
 
                 <h3>A Equação do Foguete (Delta-V)</h3>
-                <p>No espaço, não medimos distância em quilômetros, mas em $ \Delta v $ (mudança de velocidade). O Delta-V do seu foguete obedece à equação de Tsiolkovsky:</p>
+                <!-- Fórmulas inline adaptadas para a notação padrão em HTML com MathJax -->
+                <p>No espaço, não medimos distância em quilômetros, mas em \( \Delta v \) (mudança de velocidade). O Delta-V do seu foguete obedece à equação de Tsiolkovsky:</p>
                 
                 <div class="math-box">
                     $$ \Delta v = I_{sp} \cdot g_0 \cdot \ln\left(\frac{m_0}{m_f}\right) $$
                 </div>
                 
-                <p>Onde $I_{sp}$ é a eficiência do motor (Impulso Específico), $g_0$ é a gravidade, e $ \ln(m_0/m_f) $ é a relação entre a nave cheia e seca. <strong>Resumo prático:</strong> Ejetar peso morto (tanques vazios) aumenta seu Delta-V drasticamente!</p>
+                <!-- Fórmulas inline adaptadas para a notação padrão em HTML com MathJax -->
+                <p>Onde \( I_{sp} \) é a eficiência do motor (Impulso Específico), \( g_0 \) é a gravidade, e \( \ln(m_0/m_f) \) é a relação entre a nave cheia e seca. <strong>Resumo prático:</strong> Ejetar peso morto (tanques vazios) aumenta seu Delta-V drasticamente!</p>
 
                 <div class="info-box">
                     <strong>Efeito Oberth:</strong> Nunca faça manobras de transferência no meio do nada! Ligar os motores quando você está na Periápside (ponto mais baixo e veloz) deforma sua órbita muito mais rápido, economizando toneladas de combustível.
@@ -193,9 +208,9 @@
                 <h3>Slingshot (Assistência Gravitacional)</h3>
                 <p>A manobra dos mestres. Em vez de gastar combustível para ir para Marte ou Júpiter, voe perto da Lua ou de Vênus. Se você passar por trás de um planeta (no sentido da órbita dele), a gravidade te "arremessa" para frente, aumentando seu Delta-V gratuitamente.</p>
 
-                <div class="media-placeholder gif">
+                <!--<div class="media-placeholder gif">
                     <span>[Espaço para GIF: Gráfico animado mostrando o planeta transferindo energia para a nave no Slingshot]</span>
-                </div>
+                </div>-->
 
                 <h3>Aerobraking e Reentrada</h3>
                 <p>Planetas com atmosfera (Terra, Vênus, Marte) oferecem frenagem grátis. Mergulhe o Periápside da sua nave superficialmente na atmosfera (entre 15km e 20km na Terra). O ar freará a nave, e os <strong>Heat Shields</strong> a protegerão do plasma, economizando o combustível que você gastaria para entrar em órbita.</p>
@@ -206,7 +221,5 @@
     <footer>
         <p>A engenharia aeroespacial é feita de tentativas, explosões e muito orgulho. Explore o cosmos, Comandante!</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
