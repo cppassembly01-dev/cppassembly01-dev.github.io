@@ -70,10 +70,7 @@
             transition: transform 0.3s ease;
         }
 
-        #music-player:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-blue);
-        }
+        #music-player:hover { transform: translateY(-5px); border-color: var(--accent-blue); }
 
         #music-player button {
             background: transparent;
@@ -87,10 +84,7 @@
             justify-content: center;
         }
 
-        #music-player button:hover {
-            transform: scale(1.1);
-            text-shadow: 0 0 8px var(--accent-blue);
-        }
+        #music-player button:hover { transform: scale(1.1); text-shadow: 0 0 8px var(--accent-blue); }
 
         .track-info {
             font-size: 0.9rem;
@@ -100,10 +94,7 @@
             flex-direction: column;
         }
         
-        .track-info span {
-            color: var(--accent-blue);
-            font-size: 0.8rem;
-        }
+        .track-info span { color: var(--accent-blue); font-size: 0.8rem; }
 
         /* Menu de Navegação */
         nav {
@@ -144,25 +135,12 @@
             box-shadow: 0 0 8px var(--accent-blue);
         }
 
-        nav a:hover, nav a.active {
-            color: #ffffff;
-            text-shadow: 0 0 8px var(--accent-blue);
-        }
-
-        nav a:hover::after, nav a.active::after {
-            width: 100%;
-            left: 0;
-        }
+        nav a:hover, nav a.active { color: #ffffff; text-shadow: 0 0 8px var(--accent-blue); }
+        nav a:hover::after, nav a.active::after { width: 100%; left: 0; }
 
         /* Sistema de Páginas (SPA) */
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        .page.active {
-            display: block;
-        }
+        .page { display: none; animation: fadeIn 0.5s ease-out forwards; }
+        .page.active { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
@@ -170,11 +148,7 @@
         }
 
         /* Cabeçalho */
-        header {
-            text-align: center;
-            padding: 60px 20px 40px 20px;
-        }
-
+        header { text-align: center; padding: 60px 20px 40px 20px; }
         h1 { color: var(--accent-blue); font-size: 3rem; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
         p.subtitle { font-size: 1.2rem; color: var(--accent-dark); max-width: 700px; margin: 15px auto; }
 
@@ -202,67 +176,92 @@
         .step-box { background-color: rgba(69, 162, 158, 0.1); border-left: 3px solid var(--accent-blue); padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0; }
         .alert-box { background-color: rgba(255, 82, 82, 0.1); border-left: 3px solid var(--danger); padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0; }
         .info-box { background-color: rgba(255, 202, 40, 0.1); border-left: 3px solid var(--warning); padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0; }
+        
         .math-box { text-align: center; font-size: 1.2rem; background: #000; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px dashed var(--accent-dark); overflow-x: auto;}
 
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: #0b0c10; border-radius: 8px; overflow: hidden; }
+        /* Tabela Responsiva */
+        .table-responsive { width: 100%; overflow-x: auto; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background-color: #0b0c10; min-width: 600px; }
         th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--card-bg); }
         th { background-color: var(--accent-dark); color: #fff; }
         tr:hover { background-color: rgba(69, 162, 158, 0.1); }
 
         /* Placeholders para Mídia */
         .media-placeholder {
-            width: 100%;
-            background-color: #050608;
-            border: 2px dashed var(--accent-dark);
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-dark);
-            font-weight: bold;
-            margin: 25px 0;
-            text-align: center;
-            overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            padding: 20px;
-            box-sizing: border-box;
+            width: 100%; background-color: #050608; border: 2px dashed var(--accent-dark); border-radius: 10px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--accent-dark); font-weight: bold; margin: 25px 0; text-align: center;
+            overflow: hidden; transition: transform 0.3s ease, border-color 0.3s ease; padding: 20px; box-sizing: border-box;
         }
-
         .media-placeholder:hover { transform: scale(1.02); border-color: var(--accent-blue); }
         .media-placeholder.image { height: 350px; }
         .media-placeholder.video { height: 450px; }
         .media-placeholder.gif { height: 250px; }
 
-        footer { text-align: center; padding: 40px; background-color: var(--card-bg); border-top: 2px solid var(--accent-dark); }
+        footer { text-align: center; padding: 40px 20px; background-color: var(--card-bg); border-top: 2px solid var(--accent-dark); }
+
+        /* =========================================
+           MEDIA QUERIES (AJUSTES PARA CELULARES)
+           ========================================= */
+        @media (max-width: 768px) {
+            /* Textos menores para caber na tela */
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            h3 { font-size: 1.2rem; }
+            p.subtitle { font-size: 1rem; }
+            p, li { font-size: 0.95rem; }
+
+            /* Espaçamentos menores */
+            header { padding: 40px 15px 20px 15px; }
+            main { padding: 10px; }
+            .topic { padding: 20px; margin-bottom: 25px; }
+
+            /* Menu super compacto e rolável */
+            nav { padding: 10px 5px; gap: 8px; justify-content: center; }
+            nav a { font-size: 0.85rem; padding: 5px; }
+
+            /* Foguete menor e transparente para não atrapalhar a leitura */
+            #scroll-rocket { right: 5px; font-size: 1.8rem; opacity: 0.4; }
+
+            /* Player de Música centralizado embaixo */
+            #music-player {
+                bottom: 15px; left: 10px; right: 10px;
+                justify-content: space-between;
+                padding: 10px;
+            }
+
+            /* Placeholders de mídia ajustados */
+            .media-placeholder.image { height: 250px; }
+            .media-placeholder.video { height: 250px; }
+            .media-placeholder.gif { height: 200px; }
+            
+            /* Equações matemáticas ajustadas */
+            .math-box { font-size: 1rem; padding: 10px; }
+        }
     </style>
-    <!-- MathJax para renderizar as fórmulas matemáticas (LaTeX) -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
-    <!-- Rádio Ambiente SFS -->
     <div id="music-player">
         <button id="play-pause-btn" title="Reproduzir/Pausar">▶</button>
-        <button id="next-btn" title="Próxima Faixa">⏭</button>
         <div class="track-info">
             Rádio Missão
             <span id="track-status">Pausado</span>
         </div>
+        <button id="next-btn" title="Próxima Faixa">⏭</button>
         <audio id="bg-audio" src="assets/audio/Prism - Spaceflight Simulator - Build (Official Soundtrack).opus"></audio>
     </div>
 
-    <!-- Menu de Navegação SPA -->
     <nav>
         <a href="#inicio" class="active">1. Início</a>
-        <a href="#catalogo">2. Catálogo de Peças</a>
-        <a href="#basicas">3. Missões Básicas</a>
-        <a href="#avancadas">4. Missões Avançadas</a>
-        <a href="#fisica">5. Ciência & Física</a>
+        <a href="#catalogo">2. Peças</a>
+        <a href="#basicas">3. Básicas</a>
+        <a href="#avancadas">4. Avançadas</a>
+        <a href="#fisica">5. Física</a>
     </nav>
 
-    <!-- Foguete do Scroll -->
     <div id="scroll-rocket">🚀</div>
 
     <header>
@@ -271,7 +270,6 @@
     </header>
 
     <main>
-        <!-- ================= PÁGINA 1: INÍCIO ================= -->
         <div id="page-inicio" class="page active">
             <section class="topic">
                 <h2>Bem-vindo à Agência Espacial</h2>
@@ -291,7 +289,6 @@
             </section>
         </div>
 
-        <!-- ================= PÁGINA 2: CATÁLOGO ================= -->
         <div id="page-catalogo" class="page">
             <section class="topic">
                 <h2>O Catálogo de Peças</h2>
@@ -304,28 +301,30 @@
                 </ul>
 
                 <h3>2. Propulsão (Motores)</h3>
-                <table>
-                    <tr>
-                        <th>Motor</th>
-                        <th>Uso Ideal</th>
-                        <th>Características</th>
-                    </tr>
-                    <tr>
-                        <td><strong>Hawk / Titan</strong></td>
-                        <td>Atmosfera (1º Estágio)</td>
-                        <td>Empuxo massivo para vencer a gravidade. Gasta muito combustível.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Valiant / Frontier</strong></td>
-                        <td>Vácuo do Espaço</td>
-                        <td>Baixo empuxo, mas alta eficiência. Faz o combustível render.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ion Engine</strong></td>
-                        <td>Interplanetário Longo</td>
-                        <td>Empuxo quase zero. Gasta poquíssimo combustível. Exige painéis solares.</td>
-                    </tr>
-                </table>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <th>Motor</th>
+                            <th>Uso Ideal</th>
+                            <th>Características</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Hawk / Titan</strong></td>
+                            <td>Atmosfera (1º Estágio)</td>
+                            <td>Empuxo massivo para vencer a gravidade. Gasta muito combustível.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Valiant / Frontier</strong></td>
+                            <td>Vácuo do Espaço</td>
+                            <td>Baixo empuxo, mas alta eficiência. Faz o combustível render.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ion Engine</strong></td>
+                            <td>Interplanetário Longo</td>
+                            <td>Empuxo quase zero. Gasta poquíssimo combustível. Exige painéis solares.</td>
+                        </tr>
+                    </table>
+                </div>
 
                 <div class="media-placeholder image">
                     <span>[Espaço para Imagem: Comparativo visual do tamanho e cor dos motores]</span>
@@ -340,7 +339,6 @@
             </section>
         </div>
 
-        <!-- ================= PÁGINA 3: MISSÕES BÁSICAS ================= -->
         <div id="page-basicas" class="page">
             <section class="topic">
                 <h2>Missões Iniciais (1 a 3)</h2>
@@ -374,7 +372,6 @@
             </section>
         </div>
 
-        <!-- ================= PÁGINA 4: MISSÕES AVANÇADAS ================= -->
         <div id="page-avancadas" class="page">
             <section class="topic">
                 <h2>Missões Avançadas (4 a 6)</h2>
@@ -404,7 +401,6 @@
             </section>
         </div>
 
-        <!-- ================= PÁGINA 5: FÍSICA E CIÊNCIA ================= -->
         <div id="page-fisica" class="page">
             <section class="topic">
                 <h2>Ciência de Foguetes & Interplanetário</h2>
@@ -425,8 +421,8 @@
                 <h3>Slingshot (Assistência Gravitacional)</h3>
                 <p>A manobra dos mestres. Em vez de gastar combustível para ir para Marte ou Júpiter, voe perto da Lua ou de Vênus. Se você passar por trás de um planeta (no sentido da órbita dele), a gravidade te "arremessa" para frente, aumentando seu Delta-V gratuitamente.</p>
 
-                <div class="media-placeholder animation">
-                    <span>[Espaço para Animação: Gráfico mostrando o planeta transferindo momentum para a nave no Slingshot]</span>
+                <div class="media-placeholder gif">
+                    <span>[Espaço para GIF: Gráfico animado mostrando o planeta transferindo energia para a nave no Slingshot]</span>
                 </div>
 
                 <h3>Aerobraking e Reentrada</h3>
@@ -440,27 +436,20 @@
     </footer>
 
     <script>
-        // --- Lógica de Navegação (SPA - Single Page Application) ---
+        // --- Lógica de Navegação (SPA) ---
         function handleHashChange() {
-            // Pega o hash da URL (ex: #basicas). Se não tiver, usa 'inicio'
             let hash = window.location.hash.substring(1) || 'inicio';
             
-            // Oculta todas as páginas
-            document.querySelectorAll('.page').forEach(p => {
-                p.classList.remove('active');
-            });
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             
-            // Tenta mostrar a página solicitada
             let targetPage = document.getElementById('page-' + hash);
             if(targetPage) {
                 targetPage.classList.add('active');
             } else {
-                // Fallback de segurança
                 document.getElementById('page-inicio').classList.add('active');
                 hash = 'inicio';
             }
             
-            // Atualiza os botões do menu
             document.querySelectorAll('nav a').forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === '#' + hash) {
@@ -468,13 +457,10 @@
                 }
             });
             
-            // Rola para o topo da página suavemente
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Escuta as mudanças no hash (cliques no menu ou botões de voltar/avançar do navegador)
         window.addEventListener('hashchange', handleHashChange);
-        // Aplica a lógica assim que a página carrega
         window.addEventListener('DOMContentLoaded', handleHashChange);
 
         // --- Lógica do Player de Música ---
@@ -524,8 +510,6 @@
 
         playPauseBtn.addEventListener('click', togglePlay);
         nextBtn.addEventListener('click', nextTrack);
-        
-        // Pula automaticamente para a próxima música
         audioEl.addEventListener('ended', nextTrack);
 
         // --- Lógica do Foguete do Scroll ---
@@ -533,7 +517,13 @@
             const scrollTop = window.scrollY;
             const docHeight = document.documentElement.scrollHeight;
             const winHeight = window.innerHeight;
-            const scrollPercent = scrollTop / (docHeight - winHeight);
+            
+            // Tratativa para evitar divisão por zero
+            const scrollableDistance = docHeight - winHeight;
+            let scrollPercent = 0;
+            if (scrollableDistance > 0) {
+                scrollPercent = scrollTop / scrollableDistance;
+            }
             
             const rocket = document.getElementById('scroll-rocket');
             if(rocket) {
