@@ -1,0 +1,253 @@
+/* Estilos Globais e Tema Espacial */
+:root {
+    --bg-color: #0b0c10;
+    --text-main: #c5c6c7;
+    --accent-blue: #66fcf1;
+    --accent-dark: #45a29e;
+    --card-bg: #1f2833;
+    --highlight: #e0f2f1;
+    --nav-bg: rgba(11, 12, 16, 0.95);
+    --danger: #ff5252;
+    --warning: #ffca28;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 130px; 
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow-x: hidden;
+    background-image: radial-gradient(circle at 50% 50%, #1f2833 0%, #0b0c10 100%);
+    background-attachment: fixed;
+}
+
+/* Barra de rolagem */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-thumb { background: var(--card-bg); border-radius: 10px; }
+
+/* Foguete do Scroll */
+#scroll-rocket {
+    position: fixed;
+    right: 15px;
+    top: 0;
+    font-size: 2.5rem;
+    transform: translateY(-50%) rotate(180deg);
+    z-index: 9999;
+    transition: top 0.1s ease-out;
+    pointer-events: none;
+    animation: engineExhaust 0.2s infinite alternate;
+}
+
+@keyframes engineExhaust {
+    from { filter: drop-shadow(0 5px 10px #ffca28) drop-shadow(0 2px 5px #ff5252); }
+    to { filter: drop-shadow(0 12px 15px #ffca28) drop-shadow(0 5px 10px #ff5252); }
+}
+
+/* Player de Música Flutuante */
+#music-player {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: var(--nav-bg);
+    border: 1px solid var(--accent-dark);
+    border-radius: 10px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    transition: transform 0.3s ease;
+}
+
+#music-player:hover { transform: translateY(-5px); border-color: var(--accent-blue); }
+
+#music-player button {
+    background: transparent;
+    border: none;
+    color: var(--accent-blue);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s, text-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#music-player button:hover { transform: scale(1.1); text-shadow: 0 0 8px var(--accent-blue); }
+
+.track-info {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+}
+
+.track-info span { color: var(--accent-blue); font-size: 0.8rem; }
+
+/* Menu de Navegação */
+nav {
+    position: sticky;
+    top: 0;
+    background-color: var(--nav-bg);
+    padding: 15px 10px;
+    text-align: center;
+    border-bottom: 2px solid var(--accent-dark);
+    z-index: 999;
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+nav a {
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    position: relative;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--accent-blue);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px var(--accent-blue);
+}
+
+nav a:hover, nav a.active { color: #ffffff; text-shadow: 0 0 8px var(--accent-blue); }
+nav a:hover::after, nav a.active::after { width: 100%; left: 0; }
+
+/* Sistema de Páginas (SPA) */
+.page { display: none; animation: smoothEnter 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+.page.active { display: block; }
+
+@keyframes smoothEnter {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Cabeçalho */
+header { text-align: center; padding: 60px 20px 40px 20px; }
+h1, h2, h3, nav a, .track-info { font-family: 'Orbitron', sans-serif; }
+h1 { color: var(--accent-blue); font-size: 3rem; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+p.subtitle { font-size: 1.2rem; color: var(--accent-dark); max-width: 700px; margin: 15px auto; font-family: 'Inter', sans-serif; }
+
+/* Container Principal */
+main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 70vh; }
+
+/* Tópicos e Caixas */
+.topic {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-left: 5px solid var(--accent-dark);
+}
+
+h2 { color: var(--accent-blue); font-size: 2rem; margin-top: 0; border-bottom: 1px solid rgba(69, 162, 158, 0.3); padding-bottom: 10px; }
+h3 { color: var(--highlight); margin-top: 30px; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+h3::before { content: '➔'; color: var(--accent-blue); font-size: 1rem; }
+
+p, li { line-height: 1.7; margin-top: 10px; font-size: 1.05rem; }
+ul, ol { padding-left: 20px; }
+strong { color: #fff; }
+
+.step-box { background-color: rgba(69, 162, 158, 0.1); border-left: 3px solid var(--accent-blue); padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0; }
+.alert-box { background-color: rgba(255, 82, 82, 0.1); border-left: 3px solid var(--danger); padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0; }
+.info-box { background-color: rgba(255, 202, 40, 0.1); border-left: 3px solid var(--warning); padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0; }
+
+.math-box { text-align: center; font-size: 1.2rem; background: #000; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px dashed var(--accent-dark); overflow-x: auto;}
+
+/* Tabela Responsiva */
+.table-responsive { width: 100%; overflow-x: auto; border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; background-color: #0b0c10; min-width: 600px; }
+th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--card-bg); }
+th { background-color: var(--accent-dark); color: #fff; }
+tr:hover { background-color: rgba(69, 162, 158, 0.1); }
+
+/* Placeholders para Mídia */
+.media-placeholder {
+    width: 100%; background-color: #050608; border: 2px dashed var(--accent-dark); border-radius: 10px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: var(--accent-dark); font-weight: bold; margin: 25px 0; text-align: center;
+    overflow: hidden; transition: transform 0.3s ease, border-color 0.3s ease; padding: 0; box-sizing: border-box;
+    position: relative;
+}
+.media-placeholder:hover { transform: scale(1.02); border-color: var(--accent-blue); }
+.media-placeholder.image { height: 350px; }
+.media-placeholder.video { height: 450px; }
+.media-placeholder.gif { height: 250px; }
+
+.media-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.8;
+}
+.media-placeholder span { z-index: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+
+footer { text-align: center; padding: 40px 20px; background-color: var(--card-bg); border-top: 2px solid var(--accent-dark); }
+
+/* =========================================
+   MEDIA QUERIES (AJUSTES PARA CELULARES)
+   ========================================= */
+@media (max-width: 768px) {
+    /* Textos menores para caber na tela */
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.2rem; }
+    p.subtitle { font-size: 1rem; }
+    p, li { font-size: 0.95rem; }
+
+    /* Espaçamentos menores */
+    header { padding: 40px 15px 20px 15px; }
+    main { padding: 10px; }
+    .topic { padding: 20px; margin-bottom: 25px; }
+
+    /* Menu super compacto e rolável */
+    nav { padding: 10px 5px; gap: 8px; justify-content: center; }
+    nav a { font-size: 0.85rem; padding: 5px; }
+
+    /* Foguete menor e transparente para não atrapalhar a leitura */
+    #scroll-rocket { right: 5px; font-size: 1.8rem; opacity: 0.4; }
+
+    /* Player de Música centralizado embaixo */
+    #music-player {
+        bottom: 15px; left: 10px; right: 10px;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    /* Placeholders de mídia ajustados */
+    .media-placeholder.image { height: 250px; }
+    .media-placeholder.video { height: 250px; }
+    .media-placeholder.gif { height: 200px; }
+    
+    /* Equações matemáticas ajustadas */
+    .math-box { font-size: 1rem; padding: 10px; }
+}10px; }
+} 1rem; padding: 10px; }
+}
