@@ -24,6 +24,31 @@ function handleHashChange() {
 
 window.addEventListener('hashchange', handleHashChange);
 
+// --- NOVA LÓGICA: Navegação pelas Setas do Teclado ---
+const pageOrder = ['inicio', 'catalogo', 'basicas', 'avancadas', 'fisica'];
+
+window.addEventListener('keydown', (event) => {
+    // Pega a página atual baseada no hash (ou 'inicio' se estiver vazio)
+    let currentHash = window.location.hash.substring(1) || 'inicio';
+    let currentIndex = pageOrder.indexOf(currentHash);
+
+    // Se a página não for encontrada na lista, assume a primeira
+    if (currentIndex === -1) currentIndex = 0;
+
+    if (event.key === 'ArrowRight') {
+        // Vai para a próxima página, se não estiver na última
+        if (currentIndex < pageOrder.length - 1) {
+            window.location.hash = pageOrder[currentIndex + 1];
+        }
+    } else if (event.key === 'ArrowLeft') {
+        // Volta para a página anterior, se não estiver na primeira
+        if (currentIndex > 0) {
+            window.location.hash = pageOrder[currentIndex - 1];
+        }
+    }
+});
+// ------------------------------------------------------
+
 // Tudo o que depende do HTML estar carregado é colocado aqui dentro
 window.addEventListener('DOMContentLoaded', () => {
     handleHashChange(); // Navegação inicial
@@ -139,7 +164,6 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- Lógica do Foguete do Scroll ---
-// (Pode ficar de fora, pois ele busca o elemento 'scroll-rocket' toda vez que você rola a página)
 window.addEventListener('scroll', () => {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight;
