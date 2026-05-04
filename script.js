@@ -23,72 +23,128 @@ function handleHashChange() {
 }
 
 window.addEventListener('hashchange', handleHashChange);
-window.addEventListener('DOMContentLoaded', handleHashChange);
 
-// --- Lógica do Player de Música ---
-const audioFiles = [
-    "assets/audio/Prism - Spaceflight Simulator - Build (Official Soundtrack).opus",
-    "assets/audio/Prism - Spaceflight Simulator - Cosmic Ocean (Official Soundtrack).m4a",
-    "assets/audio/Prism - Spaceflight Simulator - Deep Space (Official Soundtrack).opus",
-    "assets/audio/Prism - Spaceflight Simulator - Far Away (Official Soundtrack).opus",
-    "assets/audio/Prism - Spaceflight Simulator - Frequency (Official Soundtrack).opus",
-    "assets/audio/Prism - Spaceflight Simulator - Space Whales (Official Soundtrack).opus",
-    "assets/audio/Prism - Spaceflight Simulator - Tiny Planet (Official Soundtrack).opus"
-];
+// Tudo o que depende do HTML estar carregado é colocado aqui dentro
+window.addEventListener('DOMContentLoaded', () => {
+    handleHashChange(); // Navegação inicial
 
-let currentTrack = 0;
+    // --- Lógica do Player de Música ---
+    const audioFiles = [
+        "assets/audio/Prism - Spaceflight Simulator - Build (Official Soundtrack).opus",
+        "assets/audio/Prism - Spaceflight Simulator - Cosmic Ocean (Official Soundtrack).m4a",
+        "assets/audio/Prism - Spaceflight Simulator - Deep Space (Official Soundtrack).opus",
+        "assets/audio/Prism - Spaceflight Simulator - Far Away (Official Soundtrack).opus",
+        "assets/audio/Prism - Spaceflight Simulator - Frequency (Official Soundtrack).opus",
+        "assets/audio/Prism - Spaceflight Simulator - Space Whales (Official Soundtrack).opus",
+        "assets/audio/Prism - Spaceflight Simulator - Tiny Planet (Official Soundtrack).opus"
+    ];
 
-const audioEl = document.getElementById('bg-audio');
-const playPauseBtn = document.getElementById('play-pause-btn');
-const nextBtn = document.getElementById('next-btn');
-const trackStatus = document.getElementById('track-status');
-const volumeSlider = document.getElementById('volume-slider');
+    let currentTrack = 0;
 
-if (volumeSlider && audioEl) {
-    audioEl.volume = volumeSlider.value;
-    volumeSlider.addEventListener('input', (e) => {
-        audioEl.volume = e.target.value;
-    });
-}
+    const audioEl = document.getElementById('bg-audio');
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const trackStatus = document.getElementById('track-status');
+    const volumeSlider = document.getElementById('volume-slider');
 
-function playTrack() {
-    audioEl.play().then(() => {
-        playPauseBtn.innerText = '⏸';
-        trackStatus.innerText = `Tocando Faixa ${currentTrack + 1}`;
-    }).catch(err => {
-        console.log("Erro ao tocar ou Autoplay bloqueado:", err);
-        playPauseBtn.innerText = '▶';
-        trackStatus.innerText = 'Erro / Pausado';
-    });
-}
-
-function togglePlay() {
-    if (audioEl.paused) {
-        playTrack();
-    } else {
-        audioEl.pause();
-        playPauseBtn.innerText = '▶';
-        trackStatus.innerText = 'Pausado';
+    if (volumeSlider && audioEl) {
+        audioEl.volume = volumeSlider.value;
+        volumeSlider.addEventListener('input', (e) => {
+            audioEl.volume = e.target.value;
+        });
     }
-}
 
-function nextTrack() {
-    currentTrack = (currentTrack + 1) % audioFiles.length;
-    audioEl.src = audioFiles[currentTrack];
-    playTrack();
-}
+    function playTrack() {
+        audioEl.play().then(() => {
+            playPauseBtn.innerText = '⏸';
+            trackStatus.innerText = `Tocando Faixa ${currentTrack + 1}`;
+        }).catch(err => {
+            console.log("Erro ao tocar ou Autoplay bloqueado:", err);
+            playPauseBtn.innerText = '▶';
+            trackStatus.innerText = 'Erro / Pausado';
+        });
+    }
 
-playPauseBtn.addEventListener('click', togglePlay);
-nextBtn.addEventListener('click', nextTrack);
-audioEl.addEventListener('ended', nextTrack);
+    function togglePlay() {
+        if (audioEl.paused) {
+            playTrack();
+        } else {
+            audioEl.pause();
+            playPauseBtn.innerText = '▶';
+            trackStatus.innerText = 'Pausado';
+        }
+    }
+
+    function nextTrack() {
+        currentTrack = (currentTrack + 1) % audioFiles.length;
+        audioEl.src = audioFiles[currentTrack];
+        playTrack();
+    }
+
+    if(playPauseBtn && nextBtn && audioEl) {
+        playPauseBtn.addEventListener('click', togglePlay);
+        nextBtn.addEventListener('click', nextTrack);
+        audioEl.addEventListener('ended', nextTrack);
+    }
+
+    // --- Lógica do Starfield ---
+    const canvas = document.getElementById('starfield');
+    if(canvas) {
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const numStars = Math.floor((canvas.width * canvas.height) / 4000);
+            for(let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.5,
+                    vx: Math.random() * 0.2 - 0.1,
+                    vy: Math.random() * 0.2 - 0.1
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#ffffff';
+            ctx.globalAlpha = 0.8;
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+                star.x += star.vx;
+                star.y += star.vy;
+                
+                if(star.x < 0) star.x = canvas.width;
+                if(star.x > canvas.width) star.x = 0;
+                if(star.y < 0) star.y = canvas.height;
+                if(star.y > canvas.height) star.y = 0;
+            });
+            requestAnimationFrame(drawStars);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        drawStars();
+    }
+});
 
 // --- Lógica do Foguete do Scroll ---
+// (Pode ficar de fora, pois ele busca o elemento 'scroll-rocket' toda vez que você rola a página)
 window.addEventListener('scroll', () => {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight;
     const winHeight = window.innerHeight;
     
-    // Tratativa para evitar divisão por zero
     const scrollableDistance = docHeight - winHeight;
     let scrollPercent = 0;
     if (scrollableDistance > 0) {
@@ -100,51 +156,3 @@ window.addEventListener('scroll', () => {
         rocket.style.top = `${Math.min(scrollPercent * 100, 95)}%`;
     }
 });
-
-// --- Lógica do Starfield ---
-const canvas = document.getElementById('starfield');
-const ctx = canvas.getContext('2d');
-let stars = [];
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initStars();
-}
-
-function initStars() {
-    stars = [];
-    const numStars = Math.floor((canvas.width * canvas.height) / 4000);
-    for(let i = 0; i < numStars; i++) {
-        stars.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            radius: Math.random() * 1.5,
-            vx: Math.random() * 0.2 - 0.1,
-            vy: Math.random() * 0.2 - 0.1
-        });
-    }
-}
-
-function drawStars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#ffffff';
-    ctx.globalAlpha = 0.8;
-    stars.forEach(star => {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fill();
-        star.x += star.vx;
-        star.y += star.vy;
-        
-        if(star.x < 0) star.x = canvas.width;
-        if(star.x > canvas.width) star.x = 0;
-        if(star.y < 0) star.y = canvas.height;
-        if(star.y > canvas.height) star.y = 0;
-    });
-    requestAnimationFrame(drawStars);
-}
-
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-drawStars();
