@@ -27,6 +27,16 @@ body {
     background-attachment: fixed;
 }
 
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
 /* Barra de rolagem */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-color); }
@@ -248,6 +258,4 @@ footer { text-align: center; padding: 40px 20px; background-color: var(--card-bg
     
     /* Equações matemáticas ajustadas */
     .math-box { font-size: 1rem; padding: 10px; }
-}10px; }
-} 1rem; padding: 10px; }
 }

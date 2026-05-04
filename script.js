@@ -42,6 +42,14 @@ const audioEl = document.getElementById('bg-audio');
 const playPauseBtn = document.getElementById('play-pause-btn');
 const nextBtn = document.getElementById('next-btn');
 const trackStatus = document.getElementById('track-status');
+const volumeSlider = document.getElementById('volume-slider');
+
+if (volumeSlider && audioEl) {
+    audioEl.volume = volumeSlider.value;
+    volumeSlider.addEventListener('input', (e) => {
+        audioEl.volume = e.target.value;
+    });
+}
 
 function playTrack() {
     audioEl.play().then(() => {
